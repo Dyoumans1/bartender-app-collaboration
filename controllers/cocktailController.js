@@ -70,3 +70,22 @@ router.delete("/:cocktailId", verifyToken, async (req, res) => {
       res.status(500).json({ err: err.message });
     }
   });
+
+  router.post("/:cocktailId/comments", verifyToken, async (req, res) => {
+    try {
+      req.body.author = req.user._id;
+      const cocktail = await Cocktail.findById(req.params.cocktailId);
+      cocktail.comments.push(req.body);
+      await cocktail.save();
+  
+      const newComment = cocktail.comments[cocktail.comments.length - 1];
+  
+      newComment._doc.author = req.user;
+  
+      res.status(201).json(newComment);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  });
+
+  module.exports = router;
