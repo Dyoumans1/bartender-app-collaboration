@@ -48,7 +48,7 @@ router.put('/:cocktailId', verifyToken, async (req,res) => {
             req.body,
             { new: true }
         );
-        updatedHoot._doc.author = req.user;
+        updatedCocktail._doc.author = req.user;
         res.status(200).json(updatedCocktail);
     } catch (err) {
         res.status(500).json({ err: err.message });
