@@ -13,6 +13,8 @@ const testJwtRouter = require('./controllers/test-jwt');
 const usersRouter = require('./controllers/users');
 const cocktailRouter = require('./controllers/cocktailController');
 
+const PORT = process.env.PORT ? process.env.PORT : 3000;
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -33,6 +35,6 @@ app.use('/cocktails', cocktailRouter);
 
 
 // Start the server and listen on port 3000
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('The express app is ready!');
 });
