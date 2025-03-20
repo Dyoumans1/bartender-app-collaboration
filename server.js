@@ -12,6 +12,7 @@ const authRouter = require('./controllers/auth');
 const testJwtRouter = require('./controllers/test-jwt');
 const usersRouter = require('./controllers/users');
 const cocktailRouter = require('./controllers/cocktailController');
+const profileRouter = require('./controllers/profileController');
 
 const PORT = process.env.PORT ? process.env.PORT : 3000;
 
@@ -32,6 +33,7 @@ app.use('/auth', authRouter);
 app.use('/test-jwt', testJwtRouter);
 app.use('/users', usersRouter);
 app.use('/cocktails', cocktailRouter);
+app.use('/profiles', profileRouter);
 
 
 // Start the server and listen on port 3000
