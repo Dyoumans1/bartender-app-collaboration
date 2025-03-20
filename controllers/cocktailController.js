@@ -73,9 +73,15 @@ router.delete("/:cocktailId", verifyToken, async (req, res) => {
 
   router.post("/:cocktailId/comments", verifyToken, async (req, res) => {
     try {
+       
+    const { rating, content } = req.body;
+    if (rating < 1 || rating > 5) {
+        return res.status(400).json({ message: 'Rating must be between 1 and 5' });
+      }
+
       req.body.author = req.user._id;
       const cocktail = await Cocktail.findById(req.params.cocktailId);
-      cocktail.comments.push(req.body);
+      cocktail.comments.push({ rating, content, author: req.user._id });
       await cocktail.save();
   
       const newComment = cocktail.comments[cocktail.comments.length - 1];
