@@ -27,7 +27,6 @@ const CommentSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         max: 5,
-        required: [true, 'Please add a rating']
         },
     author: {
         type: mongoose.Schema.Types.ObjectId,
