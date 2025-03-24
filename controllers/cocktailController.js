@@ -24,6 +24,18 @@ router.get('/', verifyToken, async (req, res) => {
     }
 });
 
+// localhost:3000/cocktails/search?name=example%20
+router.get('/search', verifyToken, async (req, res) => {
+    try {
+        const {name} = req.query
+        const cocktails = await Cocktail.find({name: name}).populate("author").sort({ createdAt: "desc" });
+        res.status(200).json(cocktails);
+    } catch (err) {
+        res.status(500).json({ err: err.message });
+    }
+});
+
+
 
 router.get('/:cocktailId', verifyToken, async (req,res) => {
     try {
