@@ -65,7 +65,7 @@ const CocktailSchema = new mongoose.Schema({
       },
     imageUrl: {
         type: String,
-        defualt: 'default-cocktail.png'
+        default: 'default-cocktail.png'
     },
     tags: {
         type: [String]

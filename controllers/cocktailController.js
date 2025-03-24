@@ -94,4 +94,27 @@ router.delete("/:cocktailId", verifyToken, async (req, res) => {
     }
   });
 
+  router.delete('/:cocktailId/comments/:commentId', verifyToken, async (req, res) => {
+    try {
+        const cocktail = await Cocktail.findById(req.params.cocktailId);
+        if (!cocktail) {
+            return res.status(404).json({ message: "Cocktail not found" });
+        }
+        const commentIndex = cocktail.comments.findIndex(
+            comment => comment._id.toString() === req.params.commentId
+        );
+
+        if (!cocktail.comments[commentIndex].author.equals(req.user._id)) {
+            return res.status(403).json({ message: "You're not allowed to delete this comment" });
+        }
+        cocktail.comments.splice(commentIndex, 1);
+        await cocktail.save();
+
+        res.status(200).json({ message: "Comment deleted successfully" });
+    } catch (err) {
+        console.error("Error deleting comment:", err);
+        res.status(500).json({ err: err.message });
+    }
+  });
+
   module.exports = router;
